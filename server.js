@@ -74,21 +74,21 @@ app.get('/', (req, res) => {
 
 // Crear usuario
 app.post('/api/usuarios', async (req, res) => {
-  const { username, email, tlf, pais, ciudad, calle } = req.body;
+  const { id_usuario, username, email, tlf, pais, ciudad, calle } = req.body;
   
-  if (!username || !email) {
+  if (!id_usuario || !username || !email) {
     return res.status(400).json({ 
       success: false, 
-      error: 'Username y email son requeridos' 
+      error: 'ID, username y email son requeridos' 
     });
   }
 
   try {
     const result = await pool.query(
-      `INSERT INTO usuario (username, email, fecha_registro, tlf, pais, ciudad, calle)
-       VALUES ($1, $2, NOW(), $3, $4, $5, $6)
+      `INSERT INTO usuario (id_usuario, username, email, fecha_registro, tlf, pais, ciudad, calle)
+       VALUES ($1, $2, $3, NOW(), $4, $5, $6, $7)
        RETURNING id_usuario`,
-      [username, email, tlf || null, pais || null, ciudad || null, calle || null]
+      [id_usuario, username, email, tlf || null, pais || null, ciudad || null, calle || null]
     );
     
     res.json({ 
@@ -128,21 +128,21 @@ app.get('/api/usuarios', async (req, res) => {
 
 // Crear sucursal
 app.post('/api/sucursales', async (req, res) => {
-  const { pais, ciudad, calle, telefono } = req.body;
+  const { id_sucursal, pais, ciudad, calle, telefono } = req.body;
   
-  if (!pais || !ciudad) {
+  if (!id_sucursal || !pais || !ciudad) {
     return res.status(400).json({ 
       success: false, 
-      error: 'País y ciudad son requeridos' 
+      error: 'ID, país y ciudad son requeridos' 
     });
   }
 
   try {
     const result = await pool.query(
-      `INSERT INTO sucursal (pais, ciudad, calle, telefono)
-       VALUES ($1, $2, $3, $4)
+      `INSERT INTO sucursal (id_sucursal, pais, ciudad, calle, telefono)
+       VALUES ($1, $2, $3, $4, $5)
        RETURNING id_sucursal`,
-      [pais, ciudad, calle || null, telefono || null]
+      [id_sucursal, pais, ciudad, calle || null, telefono || null]
     );
     
     res.json({ 
@@ -182,21 +182,21 @@ app.get('/api/sucursales', async (req, res) => {
 
 // Crear producto
 app.post('/api/productos', async (req, res) => {
-  const { descripcion, coste, es_carta } = req.body;
+  const { id_productos, descripcion, coste, es_carta } = req.body;
   
-  if (!descripcion || coste === undefined) {
+  if (!id_productos || !descripcion || coste === undefined) {
     return res.status(400).json({ 
       success: false, 
-      error: 'Descripción y coste son requeridos' 
+      error: 'ID, descripción y coste son requeridos' 
     });
   }
 
   try {
     const result = await pool.query(
-      `INSERT INTO productos (descr_producto, coste_producto, es_carta)
-       VALUES ($1, $2, $3)
+      `INSERT INTO productos (id_productos, descr_producto, coste_producto, es_carta)
+       VALUES ($1, $2, $3, $4)
        RETURNING id_productos`,
-      [descripcion, parseFloat(coste), es_carta || false]
+      [id_productos, descripcion, parseFloat(coste), es_carta || false]
     );
     
     res.json({ 
@@ -236,21 +236,21 @@ app.get('/api/productos', async (req, res) => {
 
 // Crear mazo
 app.post('/api/mazos', async (req, res) => {
-  const { nombre, formato, descripcion, id_creador } = req.body;
+  const { id_mazo, nombre, formato, descripcion, id_creador } = req.body;
   
-  if (!nombre || !formato) {
+  if (!id_mazo || !nombre || !formato) {
     return res.status(400).json({ 
       success: false, 
-      error: 'Nombre y formato son requeridos' 
+      error: 'ID, nombre y formato son requeridos' 
     });
   }
 
   try {
     const result = await pool.query(
-      `INSERT INTO mazo (nombre_mazo, formato_mazo, descripcion_mazo, id_creador, fecha_subida)
-       VALUES ($1, $2, $3, $4, NOW())
+      `INSERT INTO mazo (id_mazo, nombre_mazo, formato_mazo, descripcion_mazo, id_creador, fecha_subida)
+       VALUES ($1, $2, $3, $4, $5, NOW())
        RETURNING id_mazo`,
-      [nombre, formato, descripcion || null, id_creador || 1]
+      [id_mazo, nombre, formato, descripcion || null, id_creador || 1]
     );
     
     res.json({ 
@@ -292,9 +292,9 @@ app.get('/api/mazos', async (req, res) => {
 
 // Crear transacción
 app.post('/api/transacciones', async (req, res) => {
-  const { tipo, id_emisor, id_receptor, cantidad } = req.body;
+  const { ref_movimiento, tipo, id_emisor, id_receptor, cantidad } = req.body;
   
-  if (!tipo || !id_emisor || !id_receptor || !cantidad) {
+  if (!ref_movimiento || !tipo || !id_emisor || !id_receptor || !cantidad) {
     return res.status(400).json({ 
       success: false, 
       error: 'Todos los campos son requeridos' 
@@ -303,10 +303,10 @@ app.post('/api/transacciones', async (req, res) => {
 
   try {
     const result = await pool.query(
-      `INSERT INTO transaccion (tipo_transaccion, id_emisor, id_receptor, cantidad_productos, fecha_transaccion)
-       VALUES ($1, $2, $3, $4, NOW())
+      `INSERT INTO transaccion (ref_movimiento, tipo_transaccion, id_emisor, id_receptor, cantidad_productos, fecha_transaccion)
+       VALUES ($1, $2, $3, $4, $5, NOW())
        RETURNING ref_movimiento`,
-      [tipo, id_emisor, id_receptor, cantidad]
+      [ref_movimiento, tipo, id_emisor, id_receptor, cantidad]
     );
     
     res.json({ 
@@ -346,7 +346,7 @@ app.get('/api/transacciones', async (req, res) => {
   }
 });
 
-// ===== CARTAS =====
+
 
 // Filtrar cartas
 app.post('/api/cartas/filtrar', async (req, res) => {

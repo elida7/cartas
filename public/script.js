@@ -1,5 +1,5 @@
 // ===== CONFIGURACIÓN DE LA API =====
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = 'http://localhost:3001/api';
 
 // ===== VARIABLES GLOBALES =====
 let currentSection = 'inicio';
@@ -143,6 +143,8 @@ function setupFormListeners() {
     if (crearSucursalForm) {
         crearSucursalForm.addEventListener('submit', handleCrearSucursal);
     }
+    
+
 }
 
 // ===== FUNCIÓN PARA VERIFICAR CONEXIÓN CON BACKEND =====
@@ -275,10 +277,11 @@ async function handleCrearMazo(e) {
     // Obtener datos del formulario
     const formData = new FormData(e.target);
     const mazoData = {
+        id_mazo: parseInt(formData.get('id_mazo')),
         nombre: formData.get('nombre'),
         formato: formData.get('formato'),
         descripcion: formData.get('descripcion'),
-        id_creador: 1 // Por defecto usuario 1
+        id_creador: parseInt(formData.get('id_creador'))
     };
     
     try {
@@ -357,12 +360,14 @@ function createMazoCard(mazo) {
     const fecha = mazo.fecha_subida ? new Date(mazo.fecha_subida).toLocaleDateString('es-ES') : 'Desconocida';
     
     cardDiv.innerHTML = `
-        <h4>${mazo.nombre_mazo || 'Sin nombre'}</h4>
+        <h4>Mazo #${mazo.id_mazo} - ${mazo.nombre_mazo || 'Sin nombre'}</h4>
+        <p><strong>ID:</strong> ${mazo.id_mazo}</p>
         <p><strong>Formato:</strong> ${mazo.formato_mazo || 'Sin formato'}</p>
         <p><strong>Creador:</strong> ${mazo.creador || 'Desconocido'}</p>
         <p><strong>Cartas:</strong> ${mazo.cant_cartas || 0}</p>
         <p><strong>Likes:</strong> ${mazo.likes || 0}</p>
         <p><strong>Descripción:</strong> ${mazo.descripcion_mazo || 'Sin descripción'}</p>
+        <p><strong>Fecha de subida:</strong> ${fecha}</p>
     `;
     
     return cardDiv;
@@ -376,6 +381,7 @@ async function handleRegistrarProducto(e) {
     // Obtener datos del formulario
     const formData = new FormData(e.target);
     const productoData = {
+        id_productos: parseInt(formData.get('id_productos')),
         descripcion: formData.get('descripcion'),
         coste: parseFloat(formData.get('coste')),
         es_carta: formData.get('es_carta') === 'on'
@@ -456,6 +462,7 @@ function createProductoCard(producto) {
     
     cardDiv.innerHTML = `
         <h4>Producto #${producto.id_productos}</h4>
+        <p><strong>ID:</strong> ${producto.id_productos}</p>
         <p><strong>Descripción:</strong> ${producto.descr_producto || 'Sin descripción'}</p>
         <p><strong>Coste:</strong> $${producto.coste_producto || 0}</p>
         <p><strong>Tipo:</strong> ${producto.es_carta ? 'Carta' : 'Producto'}</p>
@@ -472,6 +479,7 @@ async function handleRegistrarTransaccion(e) {
     // Obtener datos del formulario
     const formData = new FormData(e.target);
     const transaccionData = {
+        ref_movimiento: parseInt(formData.get('ref_movimiento')),
         tipo: formData.get('tipo'),
         id_emisor: parseInt(formData.get('id_emisor')),
         id_receptor: parseInt(formData.get('id_receptor')),
@@ -557,10 +565,19 @@ function createTransaccionCard(transaccion) {
         <h4>Transacción #${transaccion.ref_movimiento}</h4>
         <div class="transaction-details">
             <div class="detail">
+                <strong>ID:</strong> ${transaccion.ref_movimiento}
+            </div>
+            <div class="detail">
                 <strong>Tipo:</strong> ${transaccion.tipo_transaccion}
             </div>
             <div class="detail">
+                <strong>Emisor ID:</strong> ${transaccion.id_emisor || 'Desconocido'}
+            </div>
+            <div class="detail">
                 <strong>Emisor:</strong> ${transaccion.emisor || 'Desconocido'}
+            </div>
+            <div class="detail">
+                <strong>Receptor ID:</strong> ${transaccion.id_receptor || 'Desconocido'}
             </div>
             <div class="detail">
                 <strong>Receptor:</strong> ${transaccion.receptor || 'Desconocido'}
@@ -632,7 +649,8 @@ function createUsuarioCard(usuario) {
     const fecha = usuario.fecha_registro ? new Date(usuario.fecha_registro).toLocaleDateString('es-ES') : 'Desconocida';
     
     cardDiv.innerHTML = `
-        <h4>${usuario.username || 'Sin nombre'}</h4>
+        <h4>Usuario #${usuario.id_usuario} - ${usuario.username || 'Sin nombre'}</h4>
+        <p><strong>ID:</strong> ${usuario.id_usuario}</p>
         <p><strong>Email:</strong> ${usuario.email || 'Sin email'}</p>
         <p><strong>Teléfono:</strong> ${usuario.tlf || 'Sin teléfono'}</p>
         <p><strong>País:</strong> ${usuario.pais || 'Sin especificar'}</p>
@@ -652,6 +670,7 @@ async function handleCrearUsuario(e) {
     // Obtener datos del formulario
     const formData = new FormData(e.target);
     const usuarioData = {
+        id_usuario: parseInt(formData.get('id_usuario')),
         username: formData.get('username'),
         email: formData.get('email'),
         tlf: formData.get('tlf') || null,
@@ -692,6 +711,7 @@ async function handleCrearSucursal(e) {
     // Obtener datos del formulario
     const formData = new FormData(e.target);
     const sucursalData = {
+        id_sucursal: parseInt(formData.get('id_sucursal')),
         pais: formData.get('pais'),
         ciudad: formData.get('ciudad'),
         calle: formData.get('calle'),
@@ -772,7 +792,8 @@ function createSucursalCard(sucursal) {
     cardDiv.className = 'card-item';
     
     cardDiv.innerHTML = `
-        <h4>Sucursal #${sucursal.id_sucursal}</h4>
+        <h4>Sucursal #${sucursal.id_sucursal} - ${sucursal.ciudad}</h4>
+        <p><strong>ID:</strong> ${sucursal.id_sucursal}</p>
         <p><strong>País:</strong> ${sucursal.pais || 'Sin especificar'}</p>
         <p><strong>Ciudad:</strong> ${sucursal.ciudad || 'Sin especificar'}</p>
         <p><strong>Dirección:</strong> ${sucursal.calle || 'Sin especificar'}</p>
@@ -810,4 +831,6 @@ function showSuccess(message) {
 function showError(message) {
     console.error('❌ Error:', message);
     alert('❌ ' + message);
-} 
+}
+
+ 

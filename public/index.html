@@ -160,9 +160,15 @@
                     <form id="crear-mazo-form" class="deck-form">
                         <div class="form-row">
                             <div class="form-group">
+                                <label for="id-mazo">ID del Mazo:</label>
+                                <input type="number" id="id-mazo" name="id_mazo" required placeholder="1" min="1">
+                            </div>
+                            <div class="form-group">
                                 <label for="nombre-mazo">Nombre del Mazo:</label>
                                 <input type="text" id="nombre-mazo" name="nombre" required placeholder="Ej: Mazo Rojo Aggro">
                             </div>
+                        </div>
+                        <div class="form-row">
                             <div class="form-group">
                                 <label for="formato-mazo">Formato:</label>
                                 <select id="formato-mazo" name="formato" required>
@@ -175,6 +181,10 @@
                                     <option value="Vintage">Vintage</option>
                                     <option value="Casual">Casual</option>
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="id-creador-mazo">ID del Creador:</label>
+                                <input type="number" id="id-creador-mazo" name="id_creador" required placeholder="1" min="1">
                             </div>
                         </div>
                         <div class="form-group">
@@ -213,12 +223,25 @@
                     <form id="registrar-producto-form" class="product-form">
                         <div class="form-row">
                             <div class="form-group">
+                                <label for="id-producto">ID de Producto:</label>
+                                <input type="number" id="id-producto" name="id_productos" required placeholder="1" min="1">
+                            </div>
+                            <div class="form-group">
                                 <label for="descripcion-producto">Descripción del Producto:</label>
                                 <input type="text" id="descripcion-producto" name="descripcion" required placeholder="Ej: Booster Pack Dominaria">
                             </div>
+                        </div>
+                        <div class="form-row">
                             <div class="form-group">
                                 <label for="coste-producto">Coste ($):</label>
                                 <input type="number" id="coste-producto" name="coste" step="0.01" min="0" required placeholder="0.00">
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="es-carta" name="es_carta">
+                                    <span class="checkmark"></span>
+                                    ¿Es una carta?
+                                </label>
                             </div>
                         </div>
                         <div class="form-group">
@@ -260,6 +283,10 @@
                     <form id="registrar-transaccion-form" class="transaction-form">
                         <div class="form-row">
                             <div class="form-group">
+                                <label for="ref-movimiento">Referencia de Movimiento:</label>
+                                <input type="number" id="ref-movimiento" name="ref_movimiento" required placeholder="1" min="1">
+                            </div>
+                            <div class="form-group">
                                 <label for="tipo-transaccion">Tipo de Transacción:</label>
                                 <select id="tipo-transaccion" name="tipo" required>
                                     <option value="">Seleccionar tipo</option>
@@ -268,19 +295,24 @@
                                     <option value="venta">Venta</option>
                                 </select>
                             </div>
+                        </div>
+                        <div class="form-row">
                             <div class="form-group">
                                 <label for="cantidad-transaccion">Cantidad de Productos:</label>
                                 <input type="number" id="cantidad-transaccion" name="cantidad" min="1" required placeholder="1">
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="form-group">
                                 <label for="emisor-transaccion">ID del Emisor:</label>
                                 <input type="number" id="emisor-transaccion" name="id_emisor" min="1" required placeholder="1">
                             </div>
+                        </div>
+                        <div class="form-row">
                             <div class="form-group">
                                 <label for="receptor-transaccion">ID del Receptor:</label>
                                 <input type="number" id="receptor-transaccion" name="id_receptor" min="1" required placeholder="2">
+                            </div>
+                            <div class="form-group">
+                                <!-- Campo vacío para mantener el layout -->
                             </div>
                         </div>
                         <div class="form-actions">
@@ -332,22 +364,32 @@
                     <form id="crear-usuario-form" class="user-form">
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="username-usuario">Nombre de Usuario:</label>
-                                <input type="text" id="username-usuario" name="username" required placeholder="Ej: jugador123">
+                                <label for="id-usuario">ID de Usuario:</label>
+                                <input type="number" id="id-usuario" name="id_usuario" required placeholder="1" min="1">
                             </div>
                             <div class="form-group">
-                                <label for="email-usuario">Email:</label>
-                                <input type="email" id="email-usuario" name="email" required placeholder="jugador@email.com">
+                                <label for="username-usuario">Nombre de Usuario:</label>
+                                <input type="text" id="username-usuario" name="username" required placeholder="Ej: jugador123">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
+                                <label for="email-usuario">Email:</label>
+                                <input type="email" id="email-usuario" name="email" required placeholder="jugador@email.com">
+                            </div>
+                            <div class="form-group">
                                 <label for="telefono-usuario">Teléfono:</label>
                                 <input type="tel" id="telefono-usuario" name="tlf" placeholder="0412-1234567">
                             </div>
+                        </div>
+                        <div class="form-row">
                             <div class="form-group">
                                 <label for="pais-usuario">País:</label>
                                 <input type="text" id="pais-usuario" name="pais" placeholder="Venezuela">
+                            </div>
+                            <div class="form-group">
+                                <label for="ciudad-usuario">Ciudad:</label>
+                                <input type="text" id="ciudad-usuario" name="ciudad" placeholder="Maracaibo">
                             </div>
                         </div>
                         <div class="form-row">
@@ -381,22 +423,31 @@
                     <form id="crear-sucursal-form" class="branch-form">
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="pais-sucursal">País:</label>
-                                <input type="text" id="pais-sucursal" name="pais" required placeholder="Venezuela">
+                                <label for="id-sucursal">ID de Sucursal:</label>
+                                <input type="number" id="id-sucursal" name="id_sucursal" required placeholder="1" min="1">
                             </div>
                             <div class="form-group">
-                                <label for="ciudad-sucursal">Ciudad:</label>
-                                <input type="text" id="ciudad-sucursal" name="ciudad" required placeholder="Maracaibo">
+                                <label for="pais-sucursal">País:</label>
+                                <input type="text" id="pais-sucursal" name="pais" required placeholder="Venezuela">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
+                                <label for="ciudad-sucursal">Ciudad:</label>
+                                <input type="text" id="ciudad-sucursal" name="ciudad" required placeholder="Maracaibo">
+                            </div>
+                            <div class="form-group">
                                 <label for="calle-sucursal">Dirección:</label>
                                 <input type="text" id="calle-sucursal" name="calle" required placeholder="Av. Bella Vista, C.C Costa Verde">
                             </div>
+                        </div>
+                        <div class="form-row">
                             <div class="form-group">
                                 <label for="telefono-sucursal">Teléfono:</label>
                                 <input type="tel" id="telefono-sucursal" name="telefono" required placeholder="0412-6053898">
+                            </div>
+                            <div class="form-group">
+                                <!-- Campo vacío para mantener el layout -->
                             </div>
                         </div>
                         <div class="form-actions">
@@ -419,6 +470,8 @@
                 </div>
             </div>
         </section>
+
+
     </main>
 
     <!-- Footer -->
