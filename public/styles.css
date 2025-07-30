@@ -1,0 +1,580 @@
+/* ===== VARIABLES CSS ===== */
+:root {
+    /* Colores principales - Paleta inspirada en Magic: The Gathering */
+    --primary-color: #8B4513;      /* Marrón dorado como las cartas */
+    --secondary-color: #DAA520;     /* Dorado para acentos */
+    --accent-color: #B8860B;        /* Dorado oscuro */
+    --success-color: #228B22;       /* Verde para éxito */
+    --danger-color: #DC143C;        /* Rojo para errores */
+    --warning-color: #FFD700;       /* Amarillo para advertencias */
+    --info-color: #4169E1;          /* Azul para información */
+    
+    /* Colores de fondo */
+    --bg-primary: #1a1a1a;          /* Fondo principal oscuro */
+    --bg-secondary: #2d2d2d;        /* Fondo secundario */
+    --bg-card: #3a3a3a;             /* Fondo de tarjetas */
+    --bg-light: #4a4a4a;            /* Fondo claro */
+    
+    /* Colores de texto */
+    --text-primary: #ffffff;        /* Texto principal blanco */
+    --text-secondary: #cccccc;      /* Texto secundario gris claro */
+    --text-muted: #999999;          /* Texto atenuado */
+    
+    /* Sombras */
+    --shadow-light: 0 2px 4px rgba(0,0,0,0.1);
+    --shadow-medium: 0 4px 8px rgba(0,0,0,0.2);
+    --shadow-heavy: 0 8px 16px rgba(0,0,0,0.3);
+    
+    /* Bordes */
+    --border-radius: 8px;
+    --border-color: #555555;
+    
+    /* Espaciado */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-xxl: 3rem;
+}
+
+/* ===== RESET Y CONFIGURACIÓN BASE ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* ===== CONTAINER Y LAYOUT ===== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+/* ===== HEADER Y NAVEGACIÓN ===== */
+.header {
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    box-shadow: var(--shadow-medium);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: var(--spacing-md) 0;
+}
+
+.header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Logo del sitio */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.logo i {
+    font-size: 2rem;
+    color: var(--warning-color);
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-primary);
+}
+
+.logo span {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    opacity: 0.8;
+}
+
+/* Navegación principal */
+.nav ul {
+    display: flex;
+    list-style: none;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.nav-link {
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* ===== MAIN CONTENT ===== */
+.main {
+    padding: var(--spacing-xl) 0;
+    min-height: calc(100vh - 200px);
+}
+
+/* Secciones */
+.section {
+    display: none;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Títulos de sección */
+.section h2 {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-lg);
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.section h2 i {
+    color: var(--warning-color);
+}
+
+/* ===== HERO SECTION ===== */
+.hero {
+    text-align: center;
+    padding: var(--spacing-xxl) 0;
+}
+
+.hero h2 {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--secondary-color);
+}
+
+.hero p {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xl);
+}
+
+/* Estadísticas del hero */
+.hero-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+}
+
+.stat {
+    background: var(--bg-card);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    text-align: center;
+    box-shadow: var(--shadow-light);
+    transition: transform 0.3s ease;
+}
+
+.stat:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.stat i {
+    font-size: 2.5rem;
+    color: var(--warning-color);
+    margin-bottom: var(--spacing-md);
+}
+
+.stat h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-primary);
+}
+
+.stat p {
+    color: var(--text-secondary);
+}
+
+/* ===== FORMULARIOS ===== */
+.filters-card,
+.create-deck-card,
+.register-product-card,
+.transaction-card,
+.create-user-card,
+.create-branch-card {
+    background: var(--bg-card);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-xl);
+    box-shadow: var(--shadow-light);
+    border: 1px solid var(--border-color);
+}
+
+.filters-card h3,
+.create-deck-card h3,
+.register-product-card h3,
+.transaction-card h3 {
+    color: var(--secondary-color);
+    margin-bottom: var(--spacing-lg);
+    font-size: 1.3rem;
+}
+
+/* Grupos de formulario */
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* Inputs y selects */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+select,
+textarea {
+    padding: var(--spacing-sm);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background: var(--bg-light);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 2px rgba(218, 165, 32, 0.2);
+}
+
+/* Checkbox personalizado */
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    cursor: pointer;
+    color: var(--text-secondary);
+}
+
+.checkbox-label input[type="checkbox"] {
+    display: none;
+}
+
+.checkmark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkmark {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkmark::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--text-primary);
+    font-weight: bold;
+}
+
+/* Botones */
+.btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: var(--text-primary);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+.btn-secondary {
+    background: var(--bg-light);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* Acciones de formulario */
+.form-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+    margin-top: var(--spacing-lg);
+}
+
+/* ===== GRIDS Y LISTAS ===== */
+.cards-grid,
+.decks-grid,
+.products-grid,
+.users-grid,
+.branches-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+/* Tarjetas de cartas */
+.card-item {
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-light);
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s ease;
+}
+
+.card-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.card-item h4 {
+    color: var(--secondary-color);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.2rem;
+}
+
+.card-item p {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.card-item .card-type {
+    color: var(--warning-color);
+    font-weight: bold;
+}
+
+.card-item .card-rarity {
+    color: var(--info-color);
+    font-weight: bold;
+}
+
+/* Lista de transacciones */
+.transactions-list {
+    margin-top: var(--spacing-lg);
+}
+
+.transaction-item {
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    box-shadow: var(--shadow-light);
+    border-left: 4px solid var(--secondary-color);
+}
+
+.transaction-item h4 {
+    color: var(--secondary-color);
+    margin-bottom: var(--spacing-sm);
+}
+
+.transaction-item .transaction-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-sm);
+}
+
+.transaction-item .detail {
+    color: var(--text-secondary);
+}
+
+.transaction-item .detail strong {
+    color: var(--text-primary);
+}
+
+/* ===== ESTADOS DE CARGA Y MENSAJES ===== */
+.loading {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--text-secondary);
+}
+
+.loading i {
+    font-size: 2rem;
+    color: var(--warning-color);
+    margin-bottom: var(--spacing-md);
+}
+
+.no-results {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--text-secondary);
+}
+
+.no-results i {
+    font-size: 3rem;
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-md);
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    background: var(--bg-secondary);
+    padding: var(--spacing-lg) 0;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+}
+
+.footer p {
+    color: var(--text-secondary);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+    .header .container {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+    
+    .nav ul {
+        justify-content: center;
+    }
+    
+    .hero h2 {
+        font-size: 2rem;
+    }
+    
+    .hero-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .cards-grid,
+    .decks-grid,
+    .products-grid,
+    .users-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .section h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .nav ul {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    .hero {
+        padding: var(--spacing-lg) 0;
+    }
+    
+    .hero h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* ===== ANIMACIONES ADICIONALES ===== */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.btn-primary:active {
+    animation: pulse 0.2s ease-in-out;
+}
+
+/* Efecto de hover para las tarjetas */
+.card-item,
+.stat,
+.transaction-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.card-item::before,
+.stat::before,
+.transaction-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.card-item:hover::before,
+.stat:hover::before,
+.transaction-item:hover::before {
+    left: 100%;
+} 

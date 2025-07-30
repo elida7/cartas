@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic: The Gathering - Wizard Of The Coast</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header con navegación -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-dragon"></i>
+                <h1>Magic: The Gathering</h1>
+                <span>Wizard Of The Coast</span>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="#inicio" class="nav-link active" data-section="inicio">Inicio</a></li>
+                    <li><a href="#cartas" class="nav-link" data-section="cartas">Filtrar Cartas</a></li>
+                    <li><a href="#mazos" class="nav-link" data-section="mazos">Crear Mazos</a></li>
+                    <li><a href="#productos" class="nav-link" data-section="productos">Registrar Productos</a></li>
+                    <li><a href="#transacciones" class="nav-link" data-section="transacciones">Transacciones</a></li>
+                    <li><a href="#usuarios" class="nav-link" data-section="usuarios">Usuarios</a></li>
+                    <li><a href="#crear-usuario" class="nav-link" data-section="crear-usuario">Crear Usuario</a></li>
+                    <li><a href="#sucursales" class="nav-link" data-section="sucursales">Sucursales</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="main">
+        <!-- Sección de Inicio -->
+        <section id="inicio" class="section active">
+            <div class="container">
+                <div class="hero">
+                    <h2>Bienvenido a Magic: The Gathering</h2>
+                    <p>La plataforma oficial de Wizard Of The Coast para intercambiar y comprar productos de Magic</p>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <i class="fas fa-cards-blank"></i>
+                            <h3>Cartas</h3>
+                            <p>Filtra y busca cartas por sus características</p>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-layer-group"></i>
+                            <h3>Mazos</h3>
+                            <p>Crea y gestiona tus mazos personalizados</p>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-store"></i>
+                            <h3>Productos</h3>
+                            <p>Registra nuevos productos en el sistema</p>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-exchange-alt"></i>
+                            <h3>Transacciones</h3>
+                            <p>Realiza intercambios y compras</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Filtrar Cartas -->
+        <section id="cartas" class="section">
+            <div class="container">
+                <h2><i class="fas fa-search"></i> Filtrar Cartas</h2>
+                
+                <!-- Formulario de filtros -->
+                <div class="filters-card">
+                    <h3>Filtros de Búsqueda</h3>
+                    <form id="filtro-cartas-form" class="filters-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="nombre-carta">Nombre de la Carta:</label>
+                                <input type="text" id="nombre-carta" name="nombre" placeholder="Ej: Lightning Bolt">
+                            </div>
+                            <div class="form-group">
+                                <label for="tipo-carta">Tipo:</label>
+                                <select id="tipo-carta" name="tipo">
+                                    <option value="">Todos los tipos</option>
+                                    <option value="1">Criatura</option>
+                                    <option value="2">Tierra</option>
+                                    <option value="3">Encantamiento</option>
+                                    <option value="4">Conjuro</option>
+                                    <option value="5">Instantáneo</option>
+                                    <option value="6">Artefacto</option>
+                                    <option value="7">Planeswalker</option>
+                                    <option value="8">Tribal</option>
+                                    <option value="9">Conspiración</option>
+                                    <option value="10">Vanguardia</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="mana-carta">Color de Mana:</label>
+                                <select id="mana-carta" name="mana">
+                                    <option value="">Todos los colores</option>
+                                    <option value="1">Blanco</option>
+                                    <option value="2">Azul</option>
+                                    <option value="3">Negro</option>
+                                    <option value="4">Rojo</option>
+                                    <option value="5">Verde</option>
+                                    <option value="6">Incoloro</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="rareza-carta">Rareza:</label>
+                                <select id="rareza-carta" name="rareza">
+                                    <option value="">Todas las rarezas</option>
+                                    <option value="Común">Común</option>
+                                    <option value="Poco Común">Poco Común</option>
+                                    <option value="Rara">Rara</option>
+                                    <option value="Mítica">Mítica</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search"></i> Buscar Cartas
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="limpiarFiltros()">
+                                <i class="fas fa-eraser"></i> Limpiar Filtros
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Resultados de búsqueda -->
+                <div class="results-section">
+                    <h3>Resultados de Búsqueda</h3>
+                    <div id="resultados-cartas" class="cards-grid">
+                        <!-- Las cartas se cargarán dinámicamente aquí -->
+                    </div>
+                    <div id="loading-cartas" class="loading" style="display: none;">
+                        <i class="fas fa-spinner fa-spin"></i> Buscando cartas...
+                    </div>
+                    <div id="no-resultados" class="no-results" style="display: none;">
+                        <i class="fas fa-search"></i>
+                        <p>No se encontraron cartas con los filtros especificados</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Crear Mazos -->
+        <section id="mazos" class="section">
+            <div class="container">
+                <h2><i class="fas fa-layer-group"></i> Crear Mazos</h2>
+                
+                <!-- Formulario para crear mazo -->
+                <div class="create-deck-card">
+                    <h3>Crear Nuevo Mazo</h3>
+                    <form id="crear-mazo-form" class="deck-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="nombre-mazo">Nombre del Mazo:</label>
+                                <input type="text" id="nombre-mazo" name="nombre" required placeholder="Ej: Mazo Rojo Aggro">
+                            </div>
+                            <div class="form-group">
+                                <label for="formato-mazo">Formato:</label>
+                                <select id="formato-mazo" name="formato" required>
+                                    <option value="">Seleccionar formato</option>
+                                    <option value="Standard">Standard</option>
+                                    <option value="Modern">Modern</option>
+                                    <option value="Commander">Commander</option>
+                                    <option value="Pioneer">Pioneer</option>
+                                    <option value="Legacy">Legacy</option>
+                                    <option value="Vintage">Vintage</option>
+                                    <option value="Casual">Casual</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="descripcion-mazo">Descripción:</label>
+                            <textarea id="descripcion-mazo" name="descripcion" rows="3" placeholder="Describe tu estrategia y las cartas principales..."></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Crear Mazo
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Lista de mazos existentes -->
+                <div class="decks-section">
+                    <h3>Mazos Existentes</h3>
+                    <div id="lista-mazos" class="decks-grid">
+                        <!-- Los mazos se cargarán dinámicamente aquí -->
+                    </div>
+                    <div id="loading-mazos" class="loading" style="display: none;">
+                        <i class="fas fa-spinner fa-spin"></i> Cargando mazos...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Registrar Productos -->
+        <section id="productos" class="section">
+            <div class="container">
+                <h2><i class="fas fa-store"></i> Registrar Productos</h2>
+                
+                <!-- Formulario para registrar producto -->
+                <div class="register-product-card">
+                    <h3>Registrar Nuevo Producto</h3>
+                    <form id="registrar-producto-form" class="product-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="descripcion-producto">Descripción del Producto:</label>
+                                <input type="text" id="descripcion-producto" name="descripcion" required placeholder="Ej: Booster Pack Dominaria">
+                            </div>
+                            <div class="form-group">
+                                <label for="coste-producto">Coste ($):</label>
+                                <input type="number" id="coste-producto" name="coste" step="0.01" min="0" required placeholder="0.00">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="es-carta" name="es_carta">
+                                <span class="checkmark"></span>
+                                ¿Es una carta?
+                            </label>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Registrar Producto
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Lista de productos -->
+                <div class="products-section">
+                    <h3>Productos Registrados</h3>
+                    <div id="lista-productos" class="products-grid">
+                        <!-- Los productos se cargarán dinámicamente aquí -->
+                    </div>
+                    <div id="loading-productos" class="loading" style="display: none;">
+                        <i class="fas fa-spinner fa-spin"></i> Cargando productos...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Transacciones -->
+        <section id="transacciones" class="section">
+            <div class="container">
+                <h2><i class="fas fa-exchange-alt"></i> Transacciones</h2>
+                
+                <!-- Formulario para registrar transacción -->
+                <div class="transaction-card">
+                    <h3>Registrar Nueva Transacción</h3>
+                    <form id="registrar-transaccion-form" class="transaction-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="tipo-transaccion">Tipo de Transacción:</label>
+                                <select id="tipo-transaccion" name="tipo" required>
+                                    <option value="">Seleccionar tipo</option>
+                                    <option value="compra">Compra</option>
+                                    <option value="intercambio">Intercambio</option>
+                                    <option value="venta">Venta</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="cantidad-transaccion">Cantidad de Productos:</label>
+                                <input type="number" id="cantidad-transaccion" name="cantidad" min="1" required placeholder="1">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="emisor-transaccion">ID del Emisor:</label>
+                                <input type="number" id="emisor-transaccion" name="id_emisor" min="1" required placeholder="1">
+                            </div>
+                            <div class="form-group">
+                                <label for="receptor-transaccion">ID del Receptor:</label>
+                                <input type="number" id="receptor-transaccion" name="id_receptor" min="1" required placeholder="2">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-exchange-alt"></i> Registrar Transacción
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Lista de transacciones -->
+                <div class="transactions-section">
+                    <h3>Historial de Transacciones</h3>
+                    <div id="lista-transacciones" class="transactions-list">
+                        <!-- Las transacciones se cargarán dinámicamente aquí -->
+                    </div>
+                    <div id="loading-transacciones" class="loading" style="display: none;">
+                        <i class="fas fa-spinner fa-spin"></i> Cargando transacciones...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Usuarios -->
+        <section id="usuarios" class="section">
+            <div class="container">
+                <h2><i class="fas fa-users"></i> Usuarios</h2>
+                
+                <div class="users-section">
+                    <h3>Datos de Usuarios</h3>
+                    <div id="lista-usuarios" class="users-grid">
+                        <!-- Los usuarios se cargarán dinámicamente aquí -->
+                    </div>
+                    <div id="loading-usuarios" class="loading" style="display: none;">
+                        <i class="fas fa-spinner fa-spin"></i> Cargando usuarios...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Crear Usuario -->
+        <section id="crear-usuario" class="section">
+            <div class="container">
+                <h2><i class="fas fa-user-plus"></i> Crear Usuario</h2>
+                
+                <!-- Formulario para crear usuario -->
+                <div class="create-user-card">
+                    <h3>Registrar Nuevo Usuario</h3>
+                    <form id="crear-usuario-form" class="user-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="username-usuario">Nombre de Usuario:</label>
+                                <input type="text" id="username-usuario" name="username" required placeholder="Ej: jugador123">
+                            </div>
+                            <div class="form-group">
+                                <label for="email-usuario">Email:</label>
+                                <input type="email" id="email-usuario" name="email" required placeholder="jugador@email.com">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="telefono-usuario">Teléfono:</label>
+                                <input type="tel" id="telefono-usuario" name="tlf" placeholder="0412-1234567">
+                            </div>
+                            <div class="form-group">
+                                <label for="pais-usuario">País:</label>
+                                <input type="text" id="pais-usuario" name="pais" placeholder="Venezuela">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="ciudad-usuario">Ciudad:</label>
+                                <input type="text" id="ciudad-usuario" name="ciudad" placeholder="Maracaibo">
+                            </div>
+                            <div class="form-group">
+                                <label for="calle-usuario">Dirección:</label>
+                                <input type="text" id="calle-usuario" name="calle" placeholder="Av. Principal, Edificio 123">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-user-plus"></i> Crear Usuario
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Sucursales -->
+        <section id="sucursales" class="section">
+            <div class="container">
+                <h2><i class="fas fa-store"></i> Sucursales</h2>
+                
+                <!-- Formulario para crear sucursal -->
+                <div class="create-branch-card">
+                    <h3>Registrar Nueva Sucursal</h3>
+                    <form id="crear-sucursal-form" class="branch-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="pais-sucursal">País:</label>
+                                <input type="text" id="pais-sucursal" name="pais" required placeholder="Venezuela">
+                            </div>
+                            <div class="form-group">
+                                <label for="ciudad-sucursal">Ciudad:</label>
+                                <input type="text" id="ciudad-sucursal" name="ciudad" required placeholder="Maracaibo">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="calle-sucursal">Dirección:</label>
+                                <input type="text" id="calle-sucursal" name="calle" required placeholder="Av. Bella Vista, C.C Costa Verde">
+                            </div>
+                            <div class="form-group">
+                                <label for="telefono-sucursal">Teléfono:</label>
+                                <input type="tel" id="telefono-sucursal" name="telefono" required placeholder="0412-6053898">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-store"></i> Crear Sucursal
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Lista de sucursales -->
+                <div class="branches-section">
+                    <h3>Sucursales Registradas</h3>
+                    <div id="lista-sucursales" class="branches-grid">
+                        <!-- Las sucursales se cargarán dinámicamente aquí -->
+                    </div>
+                    <div id="loading-sucursales" class="loading" style="display: none;">
+                        <i class="fas fa-spinner fa-spin"></i> Cargando sucursales...
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; Proyecto Magic, Base de Datos - 2025B</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+    <script src="debug-navigation.js"></script>
+    <script src="emergency-fix.js"></script>
+</body>
+</html> 
