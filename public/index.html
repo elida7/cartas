@@ -160,12 +160,21 @@
                     <form id="crear-mazo-form" class="deck-form">
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="id-mazo">ID del Mazo:</label>
-                                <input type="number" id="id-mazo" name="id_mazo" required placeholder="1" min="1">
-                            </div>
-                            <div class="form-group">
                                 <label for="nombre-mazo">Nombre del Mazo:</label>
                                 <input type="text" id="nombre-mazo" name="nombre" required placeholder="Ej: Mazo Rojo Aggro">
+                            </div>
+                            <div class="form-group">
+                                <label for="formato-mazo">Formato:</label>
+                                <select id="formato-mazo" name="formato" required>
+                                    <option value="">Seleccionar formato</option>
+                                    <option value="Standard">Standard</option>
+                                    <option value="Modern">Modern</option>
+                                    <option value="Commander">Commander</option>
+                                    <option value="Pioneer">Pioneer</option>
+                                    <option value="Legacy">Legacy</option>
+                                    <option value="Vintage">Vintage</option>
+                                    <option value="Casual">Casual</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-row">
@@ -223,18 +232,28 @@
                     <form id="registrar-producto-form" class="product-form">
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="id-producto">ID de Producto:</label>
-                                <input type="number" id="id-producto" name="id_productos" required placeholder="1" min="1">
-                            </div>
-                            <div class="form-group">
                                 <label for="descripcion-producto">Descripción del Producto:</label>
                                 <input type="text" id="descripcion-producto" name="descripcion" required placeholder="Ej: Booster Pack Dominaria">
+                            </div>
+                            <div class="form-group">
+                                <label for="coste-producto">Coste ($):</label>
+                                <input type="number" id="coste-producto" name="coste" step="0.01" min="0" required placeholder="0.00">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="coste-producto">Coste ($):</label>
-                                <input type="number" id="coste-producto" name="coste" step="0.01" min="0" required placeholder="0.00">
+                                <label for="cantidad-stock">Cantidad en Stock:</label>
+                                <input type="number" id="cantidad-stock" name="cantidad_stock" min="0" required placeholder="10">
+                            </div>
+                            <div class="form-group">
+                                <label for="id-sucursal">ID de Sucursal:</label>
+                                <input type="number" id="id-sucursal" name="id_sucursal" min="1" required placeholder="1">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="id-sucursal">ID de Sucursal:</label>
+                                <input type="number" id="id-sucursal" name="id_sucursal" min="1" required placeholder="1">
                             </div>
                             <div class="form-group">
                                 <label class="checkbox-label">
@@ -243,13 +262,6 @@
                                     ¿Es una carta?
                                 </label>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="es-carta" name="es_carta">
-                                <span class="checkmark"></span>
-                                ¿Es una carta?
-                            </label>
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="btn btn-primary">
@@ -283,10 +295,6 @@
                     <form id="registrar-transaccion-form" class="transaction-form">
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="ref-movimiento">Referencia de Movimiento:</label>
-                                <input type="number" id="ref-movimiento" name="ref_movimiento" required placeholder="1" min="1">
-                            </div>
-                            <div class="form-group">
                                 <label for="tipo-transaccion">Tipo de Transacción:</label>
                                 <select id="tipo-transaccion" name="tipo" required>
                                     <option value="">Seleccionar tipo</option>
@@ -295,6 +303,10 @@
                                     <option value="venta">Venta</option>
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label for="id-producto-transaccion">ID del Producto:</label>
+                                <input type="number" id="id-producto-transaccion" name="id_producto" min="1" required placeholder="1">
+                            </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
@@ -302,17 +314,28 @@
                                 <input type="number" id="cantidad-transaccion" name="cantidad" min="1" required placeholder="1">
                             </div>
                             <div class="form-group">
-                                <label for="emisor-transaccion">ID del Emisor:</label>
-                                <input type="number" id="emisor-transaccion" name="id_emisor" min="1" required placeholder="1">
+                                <label for="monto-transaccion">Monto ($):</label>
+                                <input type="number" id="monto-transaccion" name="monto" step="0.01" min="0" required placeholder="0.00">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
+                                <label for="emisor-transaccion">ID del Emisor (opcional):</label>
+                                <input type="number" id="emisor-transaccion" name="id_emisor" min="1" placeholder="1">
+                            </div>
+                            <div class="form-group">
                                 <label for="receptor-transaccion">ID del Receptor:</label>
                                 <input type="number" id="receptor-transaccion" name="id_receptor" min="1" required placeholder="2">
                             </div>
+                        </div>
+                        <div class="form-row">
                             <div class="form-group">
-                                <!-- Campo vacío para mantener el layout -->
+                                <label for="nota-transaccion">Nota:</label>
+                                <input type="text" id="nota-transaccion" name="nota" placeholder="Compra a la tienda">
+                            </div>
+                            <div class="form-group">
+                                <label for="sucursal-transaccion">ID de Sucursal:</label>
+                                <input type="number" id="sucursal-transaccion" name="sucursal" min="1" required placeholder="1">
                             </div>
                         </div>
                         <div class="form-actions">

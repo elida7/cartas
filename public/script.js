@@ -175,10 +175,11 @@ async function handleFiltroCartas(e) {
     // Obtener datos del formulario
     const formData = new FormData(e.target);
     const filters = {
-        nombre: formData.get('nombre') || '',
-        tipo: formData.get('tipo') || '',
-        mana: formData.get('mana') || '',
-        rareza: formData.get('rareza') || ''
+        nombre: formData.get('nombre') || null,
+        id_tipo: formData.get('tipo') ? parseInt(formData.get('tipo')) : null,
+        id_mana: formData.get('mana') ? parseInt(formData.get('mana')) : null,
+        rareza: formData.get('rareza') || null,
+        limite: 10
     };
     
     try {
@@ -277,7 +278,6 @@ async function handleCrearMazo(e) {
     // Obtener datos del formulario
     const formData = new FormData(e.target);
     const mazoData = {
-        id_mazo: parseInt(formData.get('id_mazo')),
         nombre: formData.get('nombre'),
         formato: formData.get('formato'),
         descripcion: formData.get('descripcion'),
@@ -296,7 +296,7 @@ async function handleCrearMazo(e) {
         const data = await response.json();
         
         if (data.success) {
-            showSuccess('Mazo creado exitosamente con ID: ' + data.id_mazo);
+            showSuccess('Mazo creado exitosamente');
             e.target.reset();
             loadMazos(); // Recargar lista de mazos
         } else {
@@ -381,10 +381,12 @@ async function handleRegistrarProducto(e) {
     // Obtener datos del formulario
     const formData = new FormData(e.target);
     const productoData = {
-        id_productos: parseInt(formData.get('id_productos')),
+        id_productos: formData.get('id_productos') ? parseInt(formData.get('id_productos')) : null,
         descripcion: formData.get('descripcion'),
         coste: parseFloat(formData.get('coste')),
-        es_carta: formData.get('es_carta') === 'on'
+        es_carta: formData.get('es_carta') === 'on',
+        cantidad_stock: parseInt(formData.get('cantidad_stock')),
+        id_sucursal: parseInt(formData.get('id_sucursal'))
     };
     
     try {
@@ -399,7 +401,7 @@ async function handleRegistrarProducto(e) {
         const data = await response.json();
         
         if (data.success) {
-            showSuccess('Producto registrado exitosamente con ID: ' + data.id_productos);
+            showSuccess('Producto registrado exitosamente');
             e.target.reset();
             loadProductos(); // Recargar lista de productos
         } else {
@@ -479,11 +481,14 @@ async function handleRegistrarTransaccion(e) {
     // Obtener datos del formulario
     const formData = new FormData(e.target);
     const transaccionData = {
-        ref_movimiento: parseInt(formData.get('ref_movimiento')),
         tipo: formData.get('tipo'),
-        id_emisor: parseInt(formData.get('id_emisor')),
+        id_emisor: formData.get('id_emisor') ? parseInt(formData.get('id_emisor')) : null,
         id_receptor: parseInt(formData.get('id_receptor')),
-        cantidad: parseInt(formData.get('cantidad'))
+        cantidad: parseInt(formData.get('cantidad')),
+        id_producto: parseInt(formData.get('id_producto')),
+        monto: parseFloat(formData.get('monto')),
+        nota: formData.get('nota'),
+        sucursal: parseInt(formData.get('sucursal'))
     };
     
     try {

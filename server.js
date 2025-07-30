@@ -182,26 +182,24 @@ app.get('/api/sucursales', async (req, res) => {
 
 // Crear producto
 app.post('/api/productos', async (req, res) => {
-  const { id_productos, descripcion, coste, es_carta } = req.body;
+  const { id_productos, descripcion, coste, es_carta, cantidad_stock, id_sucursal } = req.body;
   
-  if (!id_productos || !descripcion || coste === undefined) {
+  if (!descripcion || coste === undefined || cantidad_stock === undefined || !id_sucursal) {
     return res.status(400).json({ 
       success: false, 
-      error: 'ID, descripción y coste son requeridos' 
+      error: 'Descripción, coste, cantidad de stock y ID de sucursal son requeridos' 
     });
   }
 
   try {
+    // Usar la función específica de la base de datos
     const result = await pool.query(
-      `INSERT INTO productos (id_productos, descr_producto, coste_producto, es_carta)
-       VALUES ($1, $2, $3, $4)
-       RETURNING id_productos`,
-      [id_productos, descripcion, parseFloat(coste), es_carta || false]
+      `CALL registrar_producto($1, $2, $3, $4, $5, $6)`,
+      [id_productos || null, descripcion, parseFloat(coste), es_carta || false, parseInt(cantidad_stock), parseInt(id_sucursal)]
     );
     
     res.json({ 
       success: true, 
-      id_productos: result.rows[0].id_productos,
       message: 'Producto registrado exitosamente' 
     });
   } catch (error) {
@@ -238,24 +236,22 @@ app.get('/api/productos', async (req, res) => {
 app.post('/api/mazos', async (req, res) => {
   const { id_mazo, nombre, formato, descripcion, id_creador } = req.body;
   
-  if (!id_mazo || !nombre || !formato) {
+  if (!nombre || !formato) {
     return res.status(400).json({ 
       success: false, 
-      error: 'ID, nombre y formato son requeridos' 
+      error: 'Nombre y formato son requeridos' 
     });
   }
 
   try {
+    // Usar la función específica de la base de datos
     const result = await pool.query(
-      `INSERT INTO mazo (id_mazo, nombre_mazo, formato_mazo, descripcion_mazo, id_creador, fecha_subida)
-       VALUES ($1, $2, $3, $4, $5, NOW())
-       RETURNING id_mazo`,
-      [id_mazo, nombre, formato, descripcion || null, id_creador || 1]
+      `CALL crear_mazo($1, $2, $3, $4)`,
+      [nombre, formato, descripcion || null, id_creador || 1]
     );
     
     res.json({ 
       success: true, 
-      id_mazo: result.rows[0].id_mazo,
       message: 'Mazo creado exitosamente' 
     });
   } catch (error) {
@@ -292,26 +288,24 @@ app.get('/api/mazos', async (req, res) => {
 
 // Crear transacción
 app.post('/api/transacciones', async (req, res) => {
-  const { ref_movimiento, tipo, id_emisor, id_receptor, cantidad } = req.body;
+  const { tipo, id_emisor, id_receptor, cantidad, id_producto, monto, nota, sucursal } = req.body;
   
-  if (!ref_movimiento || !tipo || !id_emisor || !id_receptor || !cantidad) {
+  if (!tipo || !id_receptor || !cantidad || !id_producto || !monto || !sucursal) {
     return res.status(400).json({ 
       success: false, 
-      error: 'Todos los campos son requeridos' 
+      error: 'Tipo, receptor, cantidad, producto, monto y sucursal son requeridos' 
     });
   }
 
   try {
+    // Usar la función específica de la base de datos
     const result = await pool.query(
-      `INSERT INTO transaccion (ref_movimiento, tipo_transaccion, id_emisor, id_receptor, cantidad_productos, fecha_transaccion)
-       VALUES ($1, $2, $3, $4, $5, NOW())
-       RETURNING ref_movimiento`,
-      [ref_movimiento, tipo, id_emisor, id_receptor, cantidad]
+      `CALL registrar_transaccion($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+      [tipo, id_emisor || null, parseInt(id_receptor), parseInt(cantidad), null, parseInt(id_producto), parseFloat(monto), nota || null, parseInt(sucursal)]
     );
     
     res.json({ 
       success: true, 
-      ref_movimiento: result.rows[0].ref_movimiento,
       message: 'Transacción registrada exitosamente' 
     });
   } catch (error) {
@@ -350,44 +344,14 @@ app.get('/api/transacciones', async (req, res) => {
 
 // Filtrar cartas
 app.post('/api/cartas/filtrar', async (req, res) => {
-  const { nombre, tipo, mana, rareza } = req.body;
+  const { nombre, id_tipo, id_mana, rareza, limite } = req.body;
   
   try {
-    let query = `
-      SELECT id_juego, nombre_carta, habilidades, rareza, artista, tipo_principal
-      FROM detalle_carta
-      WHERE 1=1
-    `;
-    const params = [];
-    let paramIndex = 1;
-
-    if (nombre) {
-      query += ` AND nombre_carta ILIKE $${paramIndex}`;
-      params.push(`%${nombre}%`);
-      paramIndex++;
-    }
-
-    if (tipo) {
-      query += ` AND tipo_principal ILIKE $${paramIndex}`;
-      params.push(`%${tipo}%`);
-      paramIndex++;
-    }
-
-    if (mana) {
-      query += ` AND mana ILIKE $${paramIndex}`;
-      params.push(`%${mana}%`);
-      paramIndex++;
-    }
-
-    if (rareza) {
-      query += ` AND rareza ILIKE $${paramIndex}`;
-      params.push(`%${rareza}%`);
-      paramIndex++;
-    }
-
-    query += ' ORDER BY nombre_carta LIMIT 50';
-
-    const result = await pool.query(query, params);
+    // Usar la función específica de la base de datos
+    const result = await pool.query(
+      `SELECT * FROM filtrar_cartas($1, $2, $3, $4, $5)`,
+      [nombre || null, id_tipo || null, id_mana || null, rareza || null, limite || 10]
+    );
     
     res.json({ success: true, data: result.rows });
   } catch (error) {
